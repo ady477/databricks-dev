@@ -1,4 +1,4 @@
-# Databricks notebook source exported at Mon, 20 Jun 2016 08:13:55 UTC
+# Databricks notebook source exported at Mon, 20 Jun 2016 23:33:13 UTC
 # MAGIC %md
 # MAGIC ## Subcontractor Score
 # MAGIC  Author: ** Aditya Tiwari **
@@ -38,15 +38,6 @@ print(len(f1))
 
 # COMMAND ----------
 
-#features1 = list(df.columns[:4])
-#features2 = list(df.columns[5:])
-#features = features1 + features2
-#print(len(features))
-#print(features)
-#print(y)
-
-# COMMAND ----------
-
 #from sklearn.tree import DecisionTreeClassifier
 y_train = train["SubQualityRate"]
 x_train = train[f1]
@@ -54,10 +45,6 @@ y_test = test["SubQualityRate"]
 x_test = test[f1]
 #dt = DecisionTreeClassifier(min_samples_split=20, random_state=99)
 #clf = dt.fit(x_train, y_train)
-
-# COMMAND ----------
-
-result = clf.predict(x_test)
 
 # COMMAND ----------
 
@@ -159,6 +146,33 @@ import numpy as np
 fig, ax = plt.subplots()
 ax.plot(range(len(imp)),imp)
 #plt.xticks(range(len(f1)), f1)
+display(fig)
+
+# COMMAND ----------
+
+print(imp)
+
+# COMMAND ----------
+
+featureImp = {}
+for i in range(0, len(imp)):
+  featureImp[f1[i]] = imp[i]
+#print(featureImp)
+sortedFeatureNames = sorted(featureImp, key=featureImp.get, reverse=True)
+sortedFeatureValues = []
+#print(len(sortedFeatureImp))
+for w in sortedFeatureImp:
+  print(w, "\t : \t", featureImp[w],"\n")
+  sortedFeatureValues.append(featureImp[w])
+
+# COMMAND ----------
+
+import matplotlib.pyplot as plt
+import numpy as np
+fig, ax = plt.subplots()
+ax.plot(range(0, len(featureImp)),sortedFeatureValues)
+#plt.xticks(range(len(f1)), sortedFeatureNames, rotation='vertical')
+plt.figure(figsize=(120,500))
 display(fig)
 
 # COMMAND ----------
